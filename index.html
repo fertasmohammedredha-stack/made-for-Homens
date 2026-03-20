@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>عيد مبارك 🌙</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,600&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ─────────────────────────────────────────
+       ROOT & RESET
+    ───────────────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      /* Eid palette */
+      --eg1: #03091a;
+      --eg2: #0b1535;
+      --eg3: #1a0d30;
+      --gold:   #c9a227;
+      --goldL:  #f0d060;
+      --goldD:  #8c6e14;
+      --silver: #c4d4e8;
+      --dimTxt: rgba(196,212,232,0.55);
+      /* Love palette */
+      --lr1: #120008;
+      --lr2: #38001a;
+      --lr3: #5a0028;
+      --rose:   #e8186e;
+      --roseL:  #ffadd0;
+      --roseD:  #9e0040;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+      background: var(--eg1);
+      min-height: 100vh;
+      overflow-x: hidden;
+      cursor: default;
+    }
+
+    /* ─────────────────────────────────────────
+       CANVAS — STARS
+    ───────────────────────────────────────── */
+    #starCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      transition: opacity 1.5s ease;
+    }
+
+    /* ─────────────────────────────────────────
+       EID SECTION
+    ───────────────────────────────────────── */
+    #eid-section {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(50px, 8vw, 80px) clamp(20px, 5vw, 60px);
+      z-index: 1;
+      transition: opacity 1.3s ease, transform 1.3s ease;
+      background:
+        radial-gradient(ellipse at 15% 20%, rgba(26,28,80,0.6) 0%, transparent 55%),
+        radial-gradient(ellipse at 85% 80%, rgba(50,10,70,0.5) 0%, transparent 55%),
+        radial-gradient(ellipse at 50% 50%, rgba(12,20,55,0.8) 0%, transparent 70%);
+    }
+
+    /* Ornate double border */
+    #eid-section::before {
+      content: '';
+      position: absolute;
+      inset: 16px;
+      border: 1px solid rgba(201,162,39,0.18);
+      pointer-events: none;
+      z-index: 2;
+    }
+    #eid-section::after {
+      content: '';
+      position: absolute;
+      inset: 22px;
+      border: 1px solid rgba(201,162,39,0.08);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* Corner ornaments */
+    .corner {
+      position: absolute;
+      width: 52px;
+      height: 52px;
+      z-index: 3;
+      opacity: 0;
+      animation: fadeIn 1s ease 0.2s forwards;
+    }
+    .corner.tl { top: 8px;  left: 8px; }
+    .corner.tr { top: 8px;  right: 8px;  transform: scaleX(-1); }
+    .corner.bl { bottom: 8px; left: 8px;  transform: scaleY(-1); }
+    .corner.br { bottom: 8px; right: 8px; transform: scale(-1); }
+
+    /* ─── EID CONTENT ─── */
+    .eid-content {
+      position: relative;
+      z-index: 5;
+      text-align: center;
+      max-width: 720px;
+      width: 100%;
+    }
+
+    /* Crescent + star cluster */
+    .crescent-wrap {
+      display: inline-block;
+      position: relative;
+      margin-bottom: 10px;
+      opacity: 0;
+      animation: dropIn 1.1s cubic-bezier(0.16,1,0.3,1) 0.3s forwards;
+    }
+
+    .crescent-svg {
+      width: clamp(70px,12vw,100px);
+      height: clamp(70px,12vw,100px);
+      filter: drop-shadow(0 0 18px rgba(201,162,39,0.55))
+              drop-shadow(0 0 40px rgba(201,162,39,0.25));
+      animation: moonGlow 4s ease-in-out infinite;
+    }
+
+    @keyframes moonGlow {
+      0%,100% { filter: drop-shadow(0 0 18px rgba(201,162,39,0.55)) drop-shadow(0 0 40px rgba(201,162,39,0.25)); }
+      50%     { filter: drop-shadow(0 0 28px rgba(240,208,96,0.8))  drop-shadow(0 0 60px rgba(201,162,39,0.45)); }
+    }
+
+    .star-cluster {
+      position: absolute;
+      top: -8px; left: -22px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .s-star {
+      background: var(--goldL);
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+      animation: starTwink 2.5s ease-in-out infinite;
+    }
+    .s-star:nth-child(1) { width:14px; height:14px; animation-delay: 0s; }
+    .s-star:nth-child(2) { width:9px;  height:9px;  animation-delay: 0.7s; }
+    .s-star:nth-child(3) { width:7px;  height:7px;  animation-delay: 1.4s; }
+
+    @keyframes starTwink {
+      0%,100% { opacity: 0.9; transform: scale(1); }
+      50%     { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    /* Main title */
+    .eid-title {
+      font-family: 'Noto Naskh Arabic', serif;
+      font-size: clamp(3.4rem, 11vw, 6.8rem);
+      font-weight: 700;
+      line-height: 1.05;
+      background: linear-gradient(160deg, #f0d060 0%, #c9a227 38%, #8c6e14 65%, #f0d060 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 2px 16px rgba(201,162,39,0.4));
+      opacity: 0;
+      animation: fadeUp 1s ease 0.6s forwards;
+      letter-spacing: 0.01em;
+    }
+
+    /* Ornamental divider */
+    .ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 14px auto 10px;
+      opacity: 0;
+      animation: fadeIn 1s ease 1s forwards;
+    }
+    .ornament .ol   { width: 90px; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,162,39,0.7), transparent); }
+    .ornament .od   { width: 7px; height: 7px; background: var(--gold); transform: rotate(45deg); box-shadow: 0 0 8px var(--goldL); }
+    .ornament .ods  { width: 4px; height: 4px; background: var(--goldL); border-radius: 50%; opacity: 0.6; }
+
+    /* Subtitle lines */
+    .eid-sub-ar {
+      font-family: 'Amiri', serif;
+      font-size: clamp(1.05rem, 3vw, 1.55rem);
+      color: var(--silver);
+      font-style: italic;
+      margin-bottom: 5px;
+      opacity: 0;
+      animation: fadeUp 1s ease 1.1s forwards;
+    }
+    .eid-sub-fr {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(0.82rem, 2.2vw, 1.05rem);
+      color: rgba(201,162,39,0.6);
+      font-style: italic;
+      letter-spacing: 0.12em;
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeUp 1s ease 1.3s forwards;
+      text-transform: uppercase;
+    }
+
+    /* Message card */
+    .eid-card {
+      margin: 22px auto 0;
+      max-width: 560px;
+      padding: clamp(18px,4vw,28px) clamp(20px,5vw,40px);
+      border: 1px solid rgba(201,162,39,0.17);
+      background: rgba(201,162,39,0.03);
+      backdrop-filter: blur(6px);
+      position: relative;
+      opacity: 0;
+      animation: fadeUp 1s ease 1.55s forwards;
+    }
+    .eid-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%; transform: translateX(-50%);
+      width: 60%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,162,39,0.5), transparent);
+    }
+
+    .eid-card p {
+      font-family: 'Amiri', serif;
+      font-size: clamp(0.92rem, 2.4vw, 1.12rem);
+      color: rgba(196,212,232,0.82);
+      line-height: 2.1;
+    }
+    .eid-card p.fr {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(0.82rem, 2vw, 0.98rem);
+      font-style: italic;
+      color: rgba(201,162,39,0.55);
+      margin-top: 10px;
+      line-height: 1.8;
+    }
+
+    /* Secret trigger */
+    .secret-zone {
+      margin-top: 36px;
+      opacity: 0;
+      animation: fadeUp 1s ease 2s forwards;
+    }
+    .secret-hint {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(0.78rem, 2vw, 0.92rem);
+      color: rgba(196,212,232,0.3);
+      letter-spacing: 0.14em;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      font-style: italic;
+    }
+
+    .secret-btn {
+      position: relative;
+      background: transparent;
+      border: 1px solid rgba(201,162,39,0.28);
+      color: var(--goldL);
+      font-family: 'Noto Naskh Arabic', serif;
+      font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+      padding: 13px 38px;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      overflow: hidden;
+      transition: border-color 0.4s, color 0.4s, box-shadow 0.4s;
+      animation: btnPulse 3.5s ease-in-out infinite;
+    }
+    .secret-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(201,162,39,0) 0%, rgba(201,162,39,0.13) 100%);
+      transform: translateX(-100%);
+      transition: transform 0.45s ease;
+    }
+    .secret-btn:hover::before   { transform: translateX(0); }
+    .secret-btn:hover {
+      border-color: var(--gold);
+      color: var(--goldL);
+      box-shadow: 0 0 22px rgba(201,162,39,0.18), inset 0 0 14px rgba(201,162,39,0.05);
+    }
+    @keyframes btnPulse {
+      0%,100% { box-shadow: 0 0 8px rgba(201,162,39,0.08); }
+      50%     { box-shadow: 0 0 22px rgba(201,162,39,0.22); }
+    }
+
+    /* ─────────────────────────────────────────
+       PASSWORD OVERLAY
+    ───────────────────────────────────────── */
+    #pw-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(3,9,26,0.82);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+    #pw-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .pw-card {
+      background: linear-gradient(145deg, #08112a 0%, #0f1d42 100%);
+      border: 1px solid rgba(201,162,39,0.22);
+      padding: clamp(28px,5vw,50px) clamp(22px,5vw,50px);
+      width: 100%; max-width: 400px;
+      text-align: center;
+      position: relative;
+      transform: translateY(28px) scale(0.97);
+      transition: transform 0.45s cubic-bezier(0.16,1,0.3,1);
+    }
+    #pw-overlay.open .pw-card {
+      transform: translateY(0) scale(1);
+    }
+    .pw-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .pw-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,162,39,0.3), transparent);
+    }
+
+    .pw-close {
+      position: absolute;
+      top: 10px; left: 12px;
+      background: none;
+      border: none;
+      color: rgba(196,212,232,0.25);
+      font-size: 1rem;
+      cursor: pointer;
+      padding: 4px 6px;
+      transition: color 0.2s;
+      line-height: 1;
+    }
+    .pw-close:hover { color: var(--goldL); }
+
+    .pw-icon {
+      font-size: 2.4rem;
+      margin-bottom: 14px;
+      display: block;
+      animation: iconFloat 2.5s ease-in-out infinite;
+    }
+    @keyframes iconFloat {
+      0%,100% { transform: translateY(0); }
+      50%     { transform: translateY(-7px); }
+    }
+
+    .pw-title {
+      font-family: 'Noto Naskh Arabic', serif;
+      font-size: clamp(1.2rem, 4vw, 1.5rem);
+      color: var(--goldL);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .pw-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(0.78rem, 2vw, 0.9rem);
+      color: rgba(196,212,232,0.35);
+      font-style: italic;
+      letter-spacing: 0.09em;
+      margin-bottom: 22px;
+    }
+
+    .pw-input-wrap { position: relative; margin-bottom: 10px; }
+    .pw-input {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,162,39,0.2);
+      padding: 13px 20px;
+      color: var(--silver);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      text-align: center;
+      letter-spacing: 0.25em;
+      outline: none;
+      border-radius: 2px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      direction: ltr;
+    }
+    .pw-input:focus {
+      border-color: rgba(201,162,39,0.6);
+      box-shadow: 0 0 16px rgba(201,162,39,0.12);
+    }
+    .pw-input.err {
+      border-color: rgba(255,80,80,0.6) !important;
+      box-shadow: 0 0 12px rgba(255,80,80,0.1) !important;
+      animation: shake 0.5s ease;
+    }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20% { transform: translateX(-9px); }
+      40% { transform: translateX(9px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
+    }
+
+    .pw-error {
+      font-family: 'Amiri', serif;
+      font-size: 0.9rem;
+      color: rgba(255,120,120,0.85);
+      min-height: 22px;
+      margin-bottom: 12px;
+      opacity: 0;
+      transform: translateY(-4px);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .pw-error.show { opacity: 1; transform: translateY(0); }
+
+    .pw-btn {
+      width: 100%;
+      background: linear-gradient(135deg, rgba(201,162,39,0.08), rgba(201,162,39,0.18));
+      border: 1px solid rgba(201,162,39,0.35);
+      color: var(--goldL);
+      font-family: 'Noto Naskh Arabic', serif;
+      font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+      padding: 12px;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+      letter-spacing: 0.03em;
+    }
+    .pw-btn:hover {
+      background: linear-gradient(135deg, rgba(201,162,39,0.18), rgba(201,162,39,0.32));
+      box-shadow: 0 0 20px rgba(201,162,39,0.18);
+    }
+
+    /* ─────────────────────────────────────────
+       BLOOM TRANSITION OVERLAY
+    ───────────────────────────────────────── */
+    #bloom {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      pointer-events: none;
+      opacity: 0;
+      background: radial-gradient(ellipse at center, #5a0028 0%, #2a000e 50%, #0a0005 100%);
+      transition: opacity 0.85s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    /* ─────────────────────────────────────────
+       LOVE SECTION
+    ───────────────────────────────────────── */
+    #love-section {
+      position: fixed;
+      inset: 0;
+      z-index: 150;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(30px,5vw,60px) clamp(16px,4vw,40px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 1.1s ease, visibility 1.1s ease;
+      background:
+        radial-gradient(ellipse at 20% 30%, rgba(120,0,50,0.7) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, rgba(80,0,35,0.6) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 100%, rgba(180,0,60,0.15) 0%, transparent 50%),
+        var(--lr1);
+    }
+    #love-section.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Floating petals bg */
+    .petals-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .petal {
+      position: absolute;
+      bottom: -60px;
+      opacity: 0;
+      animation: riseUp linear infinite;
+      user-select: none;
+    }
+    @keyframes riseUp {
+      0%   { transform: translateY(0)   translateX(0)        rotate(0deg)   scale(0.7); opacity: 0; }
+      8%   { opacity: 0.75; }
+      85%  { opacity: 0.4; }
+      100% { transform: translateY(-115vh) translateX(var(--dx)) rotate(var(--rot)) scale(1.1); opacity: 0; }
+    }
+
+    /* Love content */
+    .love-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      max-width: 680px;
+      width: 100%;
+    }
+
+    .love-icon {
+      font-size: clamp(2rem, 6vw, 2.8rem);
+      display: block;
+      margin-bottom: 10px;
+      opacity: 0;
+      animation: loveIn 0.9s ease 0.2s forwards;
+    }
+    .love-title {
+      font-family: 'Noto Naskh Arabic', serif;
+      font-size: clamp(1.7rem, 5.5vw, 2.8rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, #ffd0e8 0%, #ff6baa 40%, #e8186e 70%, #ff6baa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0;
+      opacity: 0;
+      animation: loveIn 0.9s ease 0.45s forwards;
+    }
+    @keyframes loveIn {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .love-ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 14px auto 18px;
+      opacity: 0;
+      animation: loveIn 0.9s ease 0.7s forwards;
+    }
+    .love-ornament .ll  { width: 80px; height: 1px; background: linear-gradient(90deg, transparent, rgba(232,24,110,0.5), transparent); }
+    .love-ornament .lh  { color: #e8186e; font-size: 0.95rem; }
+
+    /* Message box */
+    .love-box {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(232,24,110,0.15);
+      padding: clamp(18px,4vw,34px) clamp(18px,4vw,38px);
+      position: relative;
+      margin-bottom: 18px;
+      opacity: 0;
+      animation: loveIn 0.9s ease 0.95s forwards;
+    }
+    .love-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%; transform: translateX(-50%);
+      width: 55%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(232,24,110,0.5), transparent);
+    }
+
+    #msg-ar {
+      font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+      font-size: clamp(1rem, 2.7vw, 1.2rem);
+      color: rgba(255,210,230,0.94);
+      line-height: 2.3;
+      text-align: right;
+      direction: rtl;
+      min-height: 1.5em;
+      white-space: pre-wrap;
+    }
+    #msg-fr {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(0.88rem, 2.2vw, 1.05rem);
+      color: rgba(255,173,208,0.65);
+      line-height: 1.95;
+      text-align: left;
+      direction: ltr;
+      font-style: italic;
+      margin-top: 16px;
+      min-height: 1.2em;
+      white-space: pre-wrap;
+    }
+
+    /* Blinking cursor */
+    .cur {
+      display: inline-block;
+      width: 1.5px;
+      height: 1.05em;
+      background: rgba(232,24,110,0.75);
+      margin-left: 1px;
+      vertical-align: text-bottom;
+      animation: blinkCur 0.65s step-end infinite;
+    }
+    @keyframes blinkCur { 0%,100% { opacity:1; } 50% { opacity:0; } }
+
+    .love-sig {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(0.82rem, 2vw, 0.96rem);
+      color: rgba(255,173,208,0.4);
+      font-style: italic;
+      letter-spacing: 0.1em;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+    .love-sig.show { opacity: 1; }
+
+    /* ─────────────────────────────────────────
+       SHARED ANIMATIONS
+    ───────────────────────────────────────── */
+    @keyframes fadeIn  { from { opacity:0; }              to { opacity:1; } }
+    @keyframes fadeUp  { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes dropIn  { from { opacity:0; transform:translateY(-30px) scale(0.8); } to { opacity:1; transform:translateY(0) scale(1); } }
+
+    /* ─────────────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────────────── */
+    @media (max-width: 480px) {
+      #eid-section::before { inset: 8px; }
+      #eid-section::after  { inset: 13px; }
+      .corner { width: 38px; height: 38px; }
+      .ornament .ol { width: 55px; }
+      .love-ornament .ll { width: 55px; }
+    }
+
+    /* ─────────────────────────────────────────
+       CLICK HEART PARTICLES
+    ───────────────────────────────────────── */
+    .click-heart {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      user-select: none;
+      font-size: 1.4rem;
+      line-height: 1;
+      transform: translate(-50%, -50%);
+      animation: heartBurst 1.05s ease-out forwards;
+      will-change: transform, opacity;
+    }
+    @keyframes heartBurst {
+      0%   { transform: translate(-50%, -50%) scale(0.4) rotate(var(--hr)); opacity: 1; }
+      30%  { transform: translate(calc(-50% + var(--hx)), calc(-50% + var(--hy) * 0.3)) scale(1.3) rotate(var(--hr2)); opacity: 1; }
+      100% { transform: translate(calc(-50% + var(--hx)), calc(-50% + var(--hy))) scale(0.6) rotate(var(--hr3)); opacity: 0; }
+    }
+
+    /* ─────────────────────────────────────────
+       FOOTER SIGNATURE
+    ───────────────────────────────────────── */
+    #site-footer {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 50;
+      text-align: center;
+      padding: 10px 0 12px;
+      background: linear-gradient(to top, rgba(3,9,26,0.9) 0%, transparent 100%);
+      pointer-events: none;
+    }
+    #site-footer span {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(0.68rem, 1.8vw, 0.8rem);
+      color: rgba(201,162,39,0.28);
+      letter-spacing: 0.18em;
+      font-style: italic;
+      font-weight: 300;
+      text-transform: lowercase;
+    }
+    #site-footer span b {
+      font-weight: 600;
+      color: rgba(201,162,39,0.42);
+      font-style: normal;
+      letter-spacing: 0.05em;
+    }
+    /* Adjust footer color in love section */
+    body.love-mode #site-footer span   { color: rgba(255,173,208,0.18); }
+    body.love-mode #site-footer span b { color: rgba(255,173,208,0.32); }
+  </style>
+</head>
+<body>
+
+<canvas id="starCanvas"></canvas>
+
+<!-- ══════════════════════════════════════
+     EID SECTION
+══════════════════════════════════════ -->
+<section id="eid-section">
+
+  <!-- Corner ornaments -->
+  <svg class="corner tl" viewBox="0 0 52 52" fill="none">
+    <path d="M2 2 L50 2 L50 10 L10 10 L10 50 L2 50 Z" stroke="rgba(201,162,39,0.42)" stroke-width="0.8" fill="none"/>
+    <circle cx="2" cy="2" r="2.5" fill="rgba(201,162,39,0.55)"/>
+    <path d="M18 2 L18 18 L2 18" stroke="rgba(201,162,39,0.2)" stroke-width="0.6" fill="none"/>
+    <circle cx="50" cy="2" r="1.5" fill="rgba(201,162,39,0.3)"/>
+    <circle cx="2" cy="50" r="1.5" fill="rgba(201,162,39,0.3)"/>
+  </svg>
+  <svg class="corner tr" viewBox="0 0 52 52" fill="none">
+    <path d="M2 2 L50 2 L50 10 L10 10 L10 50 L2 50 Z" stroke="rgba(201,162,39,0.42)" stroke-width="0.8" fill="none"/>
+    <circle cx="2" cy="2" r="2.5" fill="rgba(201,162,39,0.55)"/>
+    <path d="M18 2 L18 18 L2 18" stroke="rgba(201,162,39,0.2)" stroke-width="0.6" fill="none"/>
+    <circle cx="50" cy="2" r="1.5" fill="rgba(201,162,39,0.3)"/>
+    <circle cx="2" cy="50" r="1.5" fill="rgba(201,162,39,0.3)"/>
+  </svg>
+  <svg class="corner bl" viewBox="0 0 52 52" fill="none">
+    <path d="M2 2 L50 2 L50 10 L10 10 L10 50 L2 50 Z" stroke="rgba(201,162,39,0.42)" stroke-width="0.8" fill="none"/>
+    <circle cx="2" cy="2" r="2.5" fill="rgba(201,162,39,0.55)"/>
+    <path d="M18 2 L18 18 L2 18" stroke="rgba(201,162,39,0.2)" stroke-width="0.6" fill="none"/>
+    <circle cx="50" cy="2" r="1.5" fill="rgba(201,162,39,0.3)"/>
+    <circle cx="2" cy="50" r="1.5" fill="rgba(201,162,39,0.3)"/>
+  </svg>
+  <svg class="corner br" viewBox="0 0 52 52" fill="none">
+    <path d="M2 2 L50 2 L50 10 L10 10 L10 50 L2 50 Z" stroke="rgba(201,162,39,0.42)" stroke-width="0.8" fill="none"/>
+    <circle cx="2" cy="2" r="2.5" fill="rgba(201,162,39,0.55)"/>
+    <path d="M18 2 L18 18 L2 18" stroke="rgba(201,162,39,0.2)" stroke-width="0.6" fill="none"/>
+    <circle cx="50" cy="2" r="1.5" fill="rgba(201,162,39,0.3)"/>
+    <circle cx="2" cy="50" r="1.5" fill="rgba(201,162,39,0.3)"/>
+  </svg>
+
+  <div class="eid-content">
+
+    <!-- Crescent moon -->
+    <div class="crescent-wrap">
+      <div class="star-cluster">
+        <div class="s-star"></div>
+        <div class="s-star"></div>
+        <div class="s-star"></div>
+      </div>
+      <svg class="crescent-svg" viewBox="0 0 100 100">
+        <defs>
+          <radialGradient id="cg" cx="38%" cy="38%" r="60%">
+            <stop offset="0%"   stop-color="#f5d860"/>
+            <stop offset="55%"  stop-color="#c9a227"/>
+            <stop offset="100%" stop-color="#8a6010"/>
+          </radialGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <path d="M50,8 A42,42 0 1,1 50,92 A30,30 0 1,0 50,8 Z"
+              fill="url(#cg)" filter="url(#glow)"/>
+        <circle cx="74" cy="20" r="3.2" fill="#f5d860" opacity="0.9"/>
+        <circle cx="84" cy="37" r="2.1" fill="#f5d860" opacity="0.7"/>
+        <circle cx="79" cy="56" r="1.6" fill="#f5d860" opacity="0.55"/>
+      </svg>
+    </div>
+
+    <h1 class="eid-title">عيد مبارك</h1>
+
+    <div class="ornament">
+      <div class="ol"></div>
+      <div class="ods"></div>
+      <div class="od"></div>
+      <div class="ods"></div>
+      <div class="ol"></div>
+    </div>
+
+    <p class="eid-sub-ar">كل عام وأنتِ بألف خير وعافية</p>
+    <p class="eid-sub-fr">Joyeuses Fêtes de l'Aïd &mdash; Que la paix et la joie vous accompagnent</p>
+
+    <div class="eid-card">
+      <p>تقبّل الله منّا ومنكم صالح الأعمال،<br>
+         وجعل هذا العيد المبارك فرحةً تسكن القلوب وسعادةً تعمر الأيام.</p>
+      <p class="fr">Que cette fête bénie soit illuminée de sérénité, de douceur et de lumière.</p>
+    </div>
+
+    <div class="secret-zone">
+      <p class="secret-hint">✦ &ensp; توجد رسالة خاصة لكِ &ensp; ✦</p>
+      <button class="secret-btn" id="secretBtn">
+        اكتشفي رسالتكِ السرية &nbsp;✉
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     PASSWORD OVERLAY
+══════════════════════════════════════ -->
+<div id="pw-overlay" id="pwOverlay">
+  <div class="pw-card" id="pwCard">
+    <button class="pw-close" id="pwClose">✕</button>
+    <span class="pw-icon">🔐</span>
+    <h2 class="pw-title">رسالة مشفّرة</h2>
+    <p class="pw-subtitle">Message chiffré — Réservé à une seule personne</p>
+
+    <div class="pw-input-wrap">
+      <input
+        type="password"
+        id="pwInput"
+        class="pw-input"
+        placeholder="✦  كلمة المرور  ✦"
+        autocomplete="off"
+        spellcheck="false"
+      />
+    </div>
+    <p class="pw-error" id="pwError">أنتِ لستِ الشخص المقصود 🔒</p>
+    <button class="pw-btn" id="pwSubmit">فتح الرسالة &nbsp;→</button>
+  </div>
+</div>
+
+<!-- Bloom overlay -->
+<div id="bloom"></div>
+
+<!-- Footer signature -->
+<footer id="site-footer">
+  <span>crafted with ♥ by &nbsp;<b>Fertas Mohammed Redha</b></span>
+</footer>
+
+<!-- ══════════════════════════════════════
+     LOVE SECTION
+══════════════════════════════════════ -->
+<section id="love-section">
+  <div class="petals-bg" id="petalsBg"></div>
+
+  <div class="love-content">
+    <span class="love-icon">🌹</span>
+    <h2 class="love-title">رسالة من القلب</h2>
+
+    <div class="love-ornament">
+      <div class="ll"></div>
+      <span class="lh">♥</span>
+      <div class="ll"></div>
+    </div>
+
+    <div class="love-box">
+      <div id="msg-ar"></div>
+      <div id="msg-fr"></div>
+    </div>
+
+    <p class="love-sig" id="loveSig"></p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════ -->
+<script>
+/* ============================================================
+   ⚙️  CONFIG — غيّر فقط هنا
+   ============================================================ */
+const CFG = {
+  /* 🔑 كلمة المرور — غيّرها بما تشاء */
+  password: "EidSecret",
+
+  /* 💌 الرسالة العربية */
+  msgAr:
+`في هذا العيد المبارك، أردتُ أن أُهديكِ شيئاً يختلف عن كل الهدايا...
+
+أردتُ أن أُخبركِ أنكِ من تجعل الأيام تستحق الابتسامة،
+ومن تجعل الكلماتِ تعجزُ عن التعبير.
+
+كل عام وأنتِ الأجمل في حياتي. 💕`,
+
+  /* 💌 الرسالة الفرنسية */
+  msgFr:
+`Depuis que je te connais, chaque journée porte un sourire que je n'avais pas avant.
+
+Je ne sais pas encore comment t'expliquer ce que je ressens,
+mais je sais que tu es quelqu'un de très spécial pour moi.
+
+Joyeux Aïd, à toi qui rends ce monde plus doux. 🌹`,
+
+  /* ✍️  التوقيع */
+  sig: "— Avec tout mon cœur, M.R  🌙"
+};
+/* ============================================================ */
+
+
+/* ─── STARS CANVAS ─── */
+const cv = document.getElementById('starCanvas');
+const cx2 = cv.getContext('2d');
+let stars = [], animId;
+
+function resizeCv() {
+  cv.width  = window.innerWidth;
+  cv.height = window.innerHeight;
+}
+function buildStars() {
+  stars = [];
+  const n = Math.floor((cv.width * cv.height) / 5500);
+  for (let i = 0; i < n; i++) {
+    stars.push({
+      x: Math.random() * cv.width,
+      y: Math.random() * cv.height,
+      r: Math.random() * 1.4 + 0.25,
+      phase: Math.random() * Math.PI * 2,
+      speed: Math.random() * 0.006 + 0.003,
+    });
+  }
+}
+function drawLoop() {
+  const t = Date.now() * 0.001;
+  cx2.clearRect(0, 0, cv.width, cv.height);
+  stars.forEach(s => {
+    const op = 0.25 + 0.75 * ((Math.sin(t * s.speed * 100 + s.phase) + 1) / 2);
+    cx2.beginPath();
+    cx2.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    cx2.fillStyle = `rgba(200,218,255,${op})`;
+    cx2.fill();
+  });
+  animId = requestAnimationFrame(drawLoop);
+}
+resizeCv(); buildStars(); drawLoop();
+window.addEventListener('resize', () => { resizeCv(); buildStars(); });
+
+
+/* ─── PASSWORD MODAL ─── */
+const pwOverlay = document.getElementById('pw-overlay');
+const pwInput   = document.getElementById('pwInput');
+const pwError   = document.getElementById('pwError');
+
+function openPw() {
+  pwOverlay.classList.add('open');
+  setTimeout(() => pwInput.focus(), 420);
+}
+function closePw() {
+  pwOverlay.classList.remove('open');
+  pwInput.value = '';
+  pwInput.classList.remove('err');
+  pwError.classList.remove('show');
+}
+function checkPw() {
+  const v = pwInput.value.trim();
+  if (v === CFG.password) {
+    closePw();
+    launchLove();
+  } else {
+    pwInput.classList.add('err');
+    pwError.classList.add('show');
+    setTimeout(() => pwInput.classList.remove('err'), 600);
+    pwInput.value = '';
+  }
+}
+
+document.getElementById('secretBtn').addEventListener('click', openPw);
+document.getElementById('pwClose').addEventListener('click', closePw);
+document.getElementById('pwSubmit').addEventListener('click', checkPw);
+pwInput.addEventListener('keydown', e => { if (e.key === 'Enter') checkPw(); });
+pwOverlay.addEventListener('click', e => { if (e.target === pwOverlay) closePw(); });
+
+
+/* ─── LOVE TRANSITION ─── */
+function launchLove() {
+  const bloom  = document.getElementById('bloom');
+  const eidSec = document.getElementById('eid-section');
+
+  /* fade-in bloom */
+  bloom.style.opacity = '1';
+
+  setTimeout(() => {
+    /* hide eid + canvas */
+    eidSec.style.opacity  = '0';
+    eidSec.style.transform = 'scale(0.97)';
+    cv.style.opacity = '0';
+
+    /* show love section */
+    const loveSec = document.getElementById('love-section');
+    loveSec.classList.add('active');
+    document.body.classList.add('love-mode');
+
+    /* fade out bloom */
+    bloom.style.transition = 'opacity 1.1s ease';
+    bloom.style.opacity = '0';
+
+    spawnPetals();
+    setTimeout(startTypewriter, 900);
+  }, 860);
+}
+
+
+/* ─── CLICK HEARTS ─── */
+const EID_HEARTS   = ['✨','⭐','🌙','💫','✦','⟡'];
+const LOVE_HEARTS  = ['❤️','💕','💗','💖','💓','🌸','💝','🩷'];
+
+document.addEventListener('click', e => {
+  const isLove = document.body.classList.contains('love-mode');
+  const pool   = isLove ? LOVE_HEARTS : EID_HEARTS;
+  const count  = isLove ? 6 : 4;
+
+  for (let i = 0; i < count; i++) {
+    const el = document.createElement('div');
+    el.className = 'click-heart';
+    el.textContent = pool[Math.floor(Math.random() * pool.length)];
+
+    const angle = (Math.PI * 2 / count) * i + (Math.random() - 0.5) * 0.8;
+    const dist  = 55 + Math.random() * 65;
+    const hx    = Math.cos(angle) * dist;
+    const hy    = Math.sin(angle) * dist - 30;
+    const hr    = (Math.random() - 0.5) * 30;
+    const size  = 0.9 + Math.random() * 0.9;
+    const delay = i * 38;
+
+    el.style.cssText = `
+      left: ${e.clientX}px;
+      top: ${e.clientY}px;
+      font-size: ${size}rem;
+      --hx: ${hx}px;
+      --hy: ${hy}px;
+      --hr: ${hr}deg;
+      --hr2: ${hr + (Math.random()-0.5)*15}deg;
+      --hr3: ${hr + (Math.random()-0.5)*25}deg;
+      animation-delay: ${delay}ms;
+    `;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1200 + delay);
+  }
+});
+
+/* Touch support */
+document.addEventListener('touchstart', e => {
+  const t = e.touches[0];
+  document.dispatchEvent(new MouseEvent('click', { clientX: t.clientX, clientY: t.clientY }));
+}, { passive: true });
+
+
+/* ─── PETAL PARTICLES ─── */
+const PETALS = ['🌸','💕','🌹','❤️','💗','🌷','✨','💖','🫧'];
+function spawnPetals() {
+  const bg = document.getElementById('petalsBg');
+  function one() {
+    const el = document.createElement('div');
+    el.className = 'petal';
+    el.textContent = PETALS[Math.floor(Math.random() * PETALS.length)];
+    const dur   = 9 + Math.random() * 13;
+    const delay = Math.random() * 4;
+    const dx    = (Math.random() - 0.5) * 120;
+    const rot   = (Math.random() - 0.5) * 400;
+    el.style.cssText = `
+      left: ${Math.random() * 100}%;
+      font-size: ${0.75 + Math.random() * 1.3}rem;
+      animation-duration: ${dur}s;
+      animation-delay: ${delay}s;
+      --dx: ${dx}px;
+      --rot: ${rot}deg;
+    `;
+    bg.appendChild(el);
+    setTimeout(() => el.remove(), (dur + delay + 1) * 1000);
+  }
+  for (let i = 0; i < 22; i++) one();
+  setInterval(one, 750);
+}
+
+
+/* ─── TYPEWRITER ─── */
+function typeEl(el, text, charDelay, onDone) {
+  let i = 0;
+  const out = [];
+  function tick() {
+    if (i < text.length) {
+      out.push(text[i]);
+      // Render: newlines → <br>, keep cursor
+      el.innerHTML = out.join('').replace(/\n/g, '<br>') +
+                     '<span class="cur"></span>';
+      const ch = text[i];
+      const d  = (ch === '.' || ch === '،' || ch === ',') ? charDelay * 6 : charDelay;
+      i++;
+      setTimeout(tick, d);
+    } else {
+      el.innerHTML = out.join('').replace(/\n/g, '<br>');
+      if (onDone) onDone();
+    }
+  }
+  tick();
+}
+
+function startTypewriter() {
+  const ar = document.getElementById('msg-ar');
+  const fr = document.getElementById('msg-fr');
+  const sg = document.getElementById('loveSig');
+
+  typeEl(ar, CFG.msgAr, 38, () => {
+    setTimeout(() => {
+      typeEl(fr, CFG.msgFr, 42, () => {
+        setTimeout(() => {
+          sg.textContent = CFG.sig;
+          sg.classList.add('show');
+        }, 550);
+      });
+    }, 700);
+  });
+}
+</script>
+</body>
+</html>
